@@ -15,8 +15,14 @@ class DbRepoImpl implements DbRepo {
   }
 
   @override
-  deleteNote(String content) {
+  deleteNote(int index) {
     // TODO: implement deleteNote
-    GetIt.I<DbMethods>().deleteToDo(content);
+    GetIt.I<DbMethods>().deleteToDo(index);
+  }
+
+  @override
+  updateNote(int index, ToDo toDo) {
+    // TODO: implement updateNote
+    GetIt.I<DbMethods>().updateToDo(index, toDo);
   }
 }

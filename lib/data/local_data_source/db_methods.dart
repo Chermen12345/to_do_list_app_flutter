@@ -3,7 +3,8 @@ import 'package:to_do_list/data/models/todo.dart';
 
 abstract class DbMethods {
   addToDo(ToDo toDo);
-  deleteToDo(String content);
+  deleteToDo(int index);
+  updateToDo(int index, ToDo toDo);
   Future<List<ToDo>> getToDos();
 }
 
@@ -13,7 +14,7 @@ class DbMethodsImpl implements DbMethods {
   @override
   addToDo(ToDo toDo) {
     // TODO: implement addToDo
-    todos_box.put(toDo.content, toDo);
+    todos_box.add(toDo);
   }
 
   @override
@@ -24,8 +25,14 @@ class DbMethodsImpl implements DbMethods {
   }
 
   @override
-  deleteToDo(String content) {
+  deleteToDo(int index) {
     // TODO: implement deleteToDo
-    todos_box.delete(content);
+    todos_box.deleteAt(index);
+  }
+
+  @override
+  updateToDo(int index, ToDo toDo) {
+    // TODO: implement updateToDo
+    todos_box.putAt(index, toDo);
   }
 }

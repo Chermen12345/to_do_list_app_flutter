@@ -4,6 +4,7 @@ import 'package:to_do_list/data/models/todo.dart';
 import 'package:to_do_list/features/todolist/domain/useCases/add_note_usecase.dart';
 import 'package:to_do_list/features/todolist/domain/useCases/delete_note_usecase.dart';
 import 'package:to_do_list/features/todolist/domain/useCases/get_notes_usecase.dart';
+import 'package:to_do_list/features/todolist/domain/useCases/update_note_usecase.dart';
 import 'package:to_do_list/features/todolist/presentation/bloc/get_notes_event.dart';
 import 'package:to_do_list/features/todolist/presentation/bloc/get_notes_state.dart';
 
@@ -21,7 +22,12 @@ class GetNotesBloc extends Bloc<GetNotesEvent, GetNotesState> {
     });
 
     on<DeleteNote>((event, emit) {
-      GetIt.I<DeleteNoteUseCase>().deleteNote(event.content);
+      GetIt.I<DeleteNoteUseCase>().deleteNote(event.index);
+      add(GetNotes());
+    });
+
+    on<UpdateNote>((event, emit) {
+      GetIt.I<UpdateNoteUseCase>().updateNote(event.index, event.toDo);
       add(GetNotes());
     });
   }

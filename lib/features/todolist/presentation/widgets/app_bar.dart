@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 PreferredSizeWidget home_app_bar = AppBar(
-        forceMaterialTransparency: true,
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: const Text(
-          "My Todo",
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
-        ));
+    backgroundColor: Colors.white,
+    forceMaterialTransparency: true,
+    centerTitle: true,
+    title: const Text(
+      "My Todo",
+      style: TextStyle(
+          color: Color.fromARGB(255, 0, 0, 0),
+          fontWeight: FontWeight.bold,
+          fontSize: 25),
+    ));

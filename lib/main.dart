@@ -8,6 +8,7 @@ import 'package:to_do_list/features/todolist/domain/repos/dbrepo.dart';
 import 'package:to_do_list/features/todolist/domain/useCases/add_note_usecase.dart';
 import 'package:to_do_list/features/todolist/domain/useCases/delete_note_usecase.dart';
 import 'package:to_do_list/features/todolist/domain/useCases/get_notes_usecase.dart';
+import 'package:to_do_list/features/todolist/domain/useCases/update_note_usecase.dart';
 
 import 'package:to_do_list/features/todolist/presentation/screens/home_screen.dart';
 import 'package:to_do_list/theme/main_theme.dart';
@@ -21,6 +22,7 @@ void main() async {
   GetIt.I.registerSingleton(AddNoteUseCase());
   GetIt.I.registerSingleton(DeleteNoteUseCase());
   GetIt.I.registerSingleton(GetNotesUseCase());
+  GetIt.I.registerSingleton(UpdateNoteUseCase());
   runApp(const MyApp());
 }
 
