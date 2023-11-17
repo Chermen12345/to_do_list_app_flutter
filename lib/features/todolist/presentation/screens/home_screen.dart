@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:to_do_list/data/models/todo.dart';
 import 'package:to_do_list/features/todolist/presentation/bloc/get_notes_bloc.dart';
 import 'package:to_do_list/features/todolist/presentation/bloc/get_notes_event.dart';
@@ -27,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: home_app_bar,
         floatingActionButton: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -39,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             child: const Icon(
               Icons.add,
-              size: 30,
+              size: 25,
             ),
           ),
         ),
@@ -50,7 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.only(left: 20, top: 20),
               child: Text(
                 "Remaining tasks: (${widget.tasks_amount})",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
+                style:
+                    const TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
               ),
             ),
             Expanded(
@@ -63,94 +66,117 @@ class _HomeScreenState extends State<HomeScreen> {
                         widget.tasks_amount = state.note_list.length;
                       });
                     });
-                    return ListView.builder(
-                        itemCount: state.note_list.length,
-                        itemBuilder: (context, i) {
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                                left: 10, right: 10, top: 10),
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 20, top: 10, right: 20),
-                                            child: Text(
-                                              state.note_list[i].title,
-                                              style: const TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 20,
-                                                bottom: 20,
-                                                top: 5,
-                                                right: 20),
-                                            child: Text(
-                                                state.note_list[i].content),
-                                          )
-                                        ]),
-                                  ),
-                                  Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 10, right: 10),
-                                        child: IconButton(
-                                            onPressed: () {
-                                              showUpdateDialog(i,
-                                                  state.note_list[i], context);
-                                            },
-                                            icon: const Icon(Icons.edit)),
-                                      ),
-                                      Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 10, right: 10),
-                                          child: IconButton(
-                                              onPressed: () {
-                                                _bloc.add(DeleteNote(i));
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                      shape: const RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          12),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          12))),
-                                                      backgroundColor:
-                                                          Theme.of(context)
-                                                              .primaryColor,
-                                                      content: const Text(
-                                                          "deleted successfully")),
-                                                );
-                                              },
-                                              icon: const Icon(
-                                                Icons.delete,
-                                                color: Colors.red,
-                                              ))),
-                                    ],
-                                  )
-                                ],
+                    if (state.note_list.isEmpty) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 80),
+                            child: Center(
+                              child: Lottie.asset(
+                                "animations/todo_anim.json",
                               ),
                             ),
-                          );
-                        });
+                          ),
+                          const Text(
+                            "you don't have any todos",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black),
+                          )
+                        ],
+                      );
+                    } else {
+                      return ListView.builder(
+                          itemCount: state.note_list.length,
+                          itemBuilder: (context, i) {
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 10, top: 10),
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20, top: 10, right: 20),
+                                              child: Text(
+                                                state.note_list[i].title,
+                                                style: const TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 20,
+                                                  bottom: 20,
+                                                  top: 5,
+                                                  right: 20),
+                                              child: Text(
+                                                  state.note_list[i].content),
+                                            )
+                                          ]),
+                                    ),
+                                    Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, right: 10),
+                                          child: IconButton(
+                                              onPressed: () {
+                                                showUpdateDialog(
+                                                    i,
+                                                    state.note_list[i],
+                                                    context);
+                                              },
+                                              icon: const Icon(Icons.edit)),
+                                        ),
+                                        Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 10, right: 10),
+                                            child: IconButton(
+                                                onPressed: () {
+                                                  _bloc.add(DeleteNote(i));
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                        shape: const RoundedRectangleBorder(
+                                                            borderRadius: BorderRadius.only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        12),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        12))),
+                                                        backgroundColor:
+                                                            Theme.of(context)
+                                                                .primaryColor,
+                                                        content: const Text(
+                                                            "deleted successfully")),
+                                                  );
+                                                },
+                                                icon: const Icon(
+                                                  Icons.delete,
+                                                  color: Colors.red,
+                                                ))),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    }
                   }
                   return Center();
                 },
@@ -176,11 +202,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: SizedBox(
-                    width: double.infinity,
+                    width: 300,
                     height: 40,
                     child: TextField(
                       controller: title_contr,
                       decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.only(
+                              left: 5, right: 0, top: 0, bottom: 0),
                           hintText: "type the title of your todo",
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15))),
@@ -188,12 +216,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(
-                  width: double.infinity,
+                  width: 300,
                   height: 40,
                   child: TextField(
                     style: TextStyle(color: Colors.black),
                     controller: content_contr,
                     decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(
+                            left: 5, right: 0, top: 0, bottom: 0),
                         hintText: "type the description of your todo",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15))),
@@ -241,23 +271,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: SizedBox(
-                    width: double.infinity,
+                    width: 300,
                     height: 40,
                     child: TextFormField(
                       controller: title_contr,
                       decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.only(
+                              left: 5, right: 0, top: 0, bottom: 0),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15))),
                     ),
                   ),
                 ),
                 SizedBox(
-                  width: double.infinity,
+                  width: 300,
                   height: 40,
                   child: TextFormField(
                     style: TextStyle(color: Colors.black),
                     controller: content_contr,
                     decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(
+                            left: 5, right: 0, top: 0, bottom: 0),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15))),
                   ),
@@ -269,7 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {
                     Navigator.pop(ctx);
                   },
-                  child: Text("Cancel")),
+                  child: const Text("Cancel")),
               TextButton(
                   onPressed: () {
                     if (title_contr.text.isNotEmpty &&
