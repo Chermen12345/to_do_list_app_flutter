@@ -1,16 +1,24 @@
-# to_do_list
+todo list app flutter
 
-A new Flutter project.
+stack:
+hive
+bloc
+getit
+clean arhitecture
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+features:
+add notes with alertdialog
+update notes with alertdialog
+delete notes
+showing amount of notes
+lottie animation when no notes
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+![todolistimage](https://github.com/Chermen12345/to_do_list_app_flutter/assets/125674026/37cbef44-8102-4ac7-ad78-edaec1ccfd1f)
+
+
+
